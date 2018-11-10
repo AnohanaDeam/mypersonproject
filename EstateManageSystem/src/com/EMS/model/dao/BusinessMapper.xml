@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.BusinessMapper">
+	<select id="selectBusinessAll" resultType="com.EMS.model.vo.BusinessVo">
+		select * from tb_business ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	<select id="selectCheckAllServicetime" resultType="com.EMS.model.vo.BusinessVo">
+		select * from tb_business where service_time is null ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	<select id="selectCheckAllNoServicetime" resultType="com.EMS.model.vo.BusinessVo">
+		select * from tb_business where service_time is not null ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	<update id="updateBybusiness_number" parameterType="com.EMS.model.vo.BusinessVo">
+		update tb_business set applicant_name=#{applicant_name},ID_number=#{id_number},
+			phone=#{phone},f_service=#{f_service},service_number=#{service_number},
+			Service_time=#{service_time},level_price=#{level_price}
+		where business_number=#{business_number}
+	</update>
+	
+	<delete id="deleteBybusiness_number" parameterType="String">
+		delete from tb_business where business_number=#{business_number}
+	</delete>
+	<update id="updateService_time" parameterType="String">
+		UPDATE tb_business SET Service_time = NOW() WHERE business_number = #{business_number}
+	</update>
+	<!-- 添加数据 -->
+	<insert id="saveBusiness" parameterType="com.EMS.model.vo.BusinessVo"
+		useGeneratedKeys="true">
+		insert into
+		tb_business(applicant_name,ID_number,phone,f_service,service_number,Service_time,business_number)
+		values(#{applicant_name},#{id_number},#{phone},
+			#{f_service},#{service_number},#{service_time},#{business_number })
+	</insert>
+
+	<select id="selectBusinessByBNumber" parameterType="String" resultType="com.EMS.model.vo.BusinessVo">
+		select * from tb_business where business_number=#{business_number} ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	
+	<select id="selectTimeNoNull" parameterType="int" resultType="com.EMS.model.vo.BusinessVo">
+		select * from tb_business where Service_time != '' ORDER BY RIGHT(business_number,14) DESC limit #{num},5
+	</select>
+	
+	<select id="selectTimeNull" parameterType="int" resultType="com.EMS.model.vo.BusinessVo">
+		select * from tb_business where Service_time is null ORDER BY RIGHT(business_number,14) DESC limit #{num},5
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) from tb_business ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	
+	<select id="selectNullCount" resultType="int">
+		select count(*) from tb_business where Service_time is null ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	
+	<select id="selectNoNullCount" resultType="int">
+		select count(*) from tb_business where Service_time != '' ORDER BY RIGHT(business_number,14) DESC
+	</select>
+	
+	<resultMap type="com.EMS.model.vo.BusinessVo" id="BusinessVoResultMap">
+		<id property="service_number" column="service_number"/>
+		<id property="f_service" column="f_service"/>
+		<result property="whether" column="whether"/>
+		<result property="material_number" column="Material_number"/>
+		<association property="mtypeVo" column="Material_number" 
+			select="com.EMS.model.dao.MtypeMapper.selectMaterial"/>
+	</resultMap>
+</mapper>

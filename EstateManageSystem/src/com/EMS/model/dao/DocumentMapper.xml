@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.DocumentMapper">
+	<select id="selectDocumentAll" resultType="com.EMS.model.vo.DocumentVo">
+		select * from tb_document
+	</select>
+	
+	<update id="updateBytitle" parameterType="com.EMS.model.vo.DocumentVo">
+		update tb_document set file_header=#{file_header},word_size=#{word_size},
+			sr_time=#{sr_time},archive_location=#{archive_location},
+			subject_term=#{subject_term},send=#{send}
+		where title=#{title}
+	</update>
+	
+	<delete id="deleteBytitle" parameterType="String">
+		delete from tb_document where title=#{title}
+	</delete>
+	
+	<!-- 添加数据 -->
+	<insert id="saveDocument" parameterType="com.EMS.model.vo.DocumentVo"
+		useGeneratedKeys="true">
+		insert into
+		tb_document(file_header,word_size,sr_time,archive_location,subject_term,send)
+		values(#{file_header},#{word_size},#{sr_time},
+			#{archive_location},#{subject_term},#{send})
+	</insert>
+
+</mapper>

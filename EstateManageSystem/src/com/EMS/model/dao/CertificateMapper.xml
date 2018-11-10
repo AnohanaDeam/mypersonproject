@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.CertificateMapper">
+	<!-- 查询CertificateVo数据 -->
+	<select id="selectAll" resultType="com.EMS.model.vo.CertificateVo">
+		select * from
+		tb_certificate
+	</select>
+	<!-- 通过主键修改CertificateVo数据 -->
+	<update id="updateByBusiness_number" parameterType="com.EMS.model.vo.CertificateVo">
+		update
+		tb_certificate set certificate_id=#{certificate_id},
+	    business_types=#{business_types} ,owner=#{owner},
+	    receive=#{receive},other_information=#{other_information}  
+		where business_number=#{business_number}
+	</update>
+	<!-- 通过主键修改receive -->
+	<update id="updateReceive" parameterType="com.EMS.model.vo.CertificateVo">
+		update tb_certificate 
+		set receive=#{receive}
+		where business_number=#{business_number}
+	</update>
+	<!-- 通过主键删除CertificateVo数据 -->
+	<delete id="deleteByBusiness_number" parameterType="String">
+		delete from
+		tb_certificate where business_number=#{business_number}
+	</delete>
+	<!-- 增加CertificateVo数据 -->
+	<insert id="save" parameterType="com.EMS.model.vo.CertificateVo">
+		insert into
+		tb_certificate(business_number,certificate_id,business_types,owner,receive,other_information)
+		values(#{business_number},#{certificate_id},#{business_types},#{owner},#{receive},#{other_information})
+	</insert>
+	<!-- 通过证件号查询数据 -->
+	<select id="selectByCertificateId" resultType="com.EMS.model.vo.CertificateVo">
+		select * 
+		from tb_certificate
+		where certificate_id = #{certificate_id}
+	</select>
+	<!-- 通过类型查询数据 -->
+	<select id="selectByBusinessTypes" resultType="com.EMS.model.vo.CertificateVo">
+		select * 
+		from tb_certificate
+		where Business_types = #{Business_types}
+	</select>
+	<!-- 通过业务号查询数据 -->
+	<select id="selectByBusinessNumber" resultType="com.EMS.model.vo.CertificateVo">
+		select * 
+		from tb_certificate
+		where business_number = #{business_number}
+	</select>
+	<!-- 通过证件所有人查询数据 -->
+	<select id="selectByOwner" resultType="com.EMS.model.vo.CertificateVo">
+		select * 
+		from tb_certificate
+		where owner = #{owner}
+	</select>
+	<!-- 搜索提示框模糊查询 -->
+	<select id="selectPrompt" parameterType="String" resultType="com.EMS.model.vo.CertificateVo">
+		select *
+			from tb_certificate
+			<where>
+				<choose>
+					<when test="param2==1">
+						certificate_id like '%${param1}%'
+					</when>
+					<when test="param2==2">
+						Business_types like '%${param1}%'
+					</when>
+					<when test="param2==3">
+						business_number like '%${param1}%'
+					</when>
+					<when test="param2==4">
+						owner like '%${param1}%'
+					</when>
+				</choose>
+			</where>
+		<!-- where certificate_id like '%${search}%' or Business_types like '%${search}%' 
+		or business_number like '%${search}%' or owner like '%${search}%' -->
+	</select>
+</mapper>

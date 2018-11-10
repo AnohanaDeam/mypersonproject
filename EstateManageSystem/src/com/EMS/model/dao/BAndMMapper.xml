@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.BAndMMapper">
+	<!-- 查询BAndMVo数据 -->
+	<select id="selectAll" resultType="com.EMS.model.vo.BAndMVo">
+		select * from tb_b_and_m
+	</select>
+	<!-- 通过主键修改BAndMVo数据 -->
+	<update id="updateByService_number" parameterType="com.EMS.model.vo.BAndMVo">
+		update
+		tb_b_and_m set material_number=#{material_number},
+		whether=#{whether} ,f_service=#{f_service}
+		where
+		service_number=#{service_number}
+	</update>
+	<!-- 通过主键删除BAndMVo数据 -->
+	<delete id="deleteByService_number" parameterType="String">
+		delete from
+		tb_b_and_m where service_number=#{service_number}
+	</delete>
+	<!-- 增加BAndMVo数据 -->
+	<insert id="save" parameterType="com.EMS.model.vo.BAndMVo">
+		insert into
+		tb_b_and_m(service_number,material_number,whether,f_service)
+		values(#{service_number},#{material_number},#{whether},#{f_service})
+	</insert>
+	<select id="selectBAndMVoByService" parameterType="com.EMS.model.vo.BAndMVo" resultType="com.EMS.model.vo.BAndMVo">
+		select * from tb_b_and_m where service_number=#{service_number} and f_service=#{f_service}
+	</select>
+	
+</mapper>

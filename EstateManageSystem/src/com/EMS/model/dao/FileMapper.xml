@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.FileMapper">
+	<!-- 查询tb_file表的数据 -->
+	<select id="selectAll" resultType="com.EMS.model.vo.FileVo">
+		select * from tb_file
+	</select>
+	
+	<select id="selectByBusiness_number" parameterType="String" resultType="com.EMS.model.vo.FileVo">
+		select * from tb_file where business_number=#{business_number}
+	</select>
+	
+	<!-- 通过主键修改tb_file表的数据 -->
+	<update id="updateByBusiness_number" parameterType="com.EMS.model.vo.FileVo" >
+		update
+		tb_file set business_types=#{business_types} ,property_owner=#{property_owner},
+		file_location=#{file_location},security=#{security},
+		address=#{address},filing_date=now()
+		where
+		business_number=#{business_number}
+	</update>
+	<!-- 通过主键删除tb_file表的数据 -->
+	<delete id="deleteByBusiness_number" parameterType="String">
+		delete from
+		tb_file where business_number=#{business_number}
+	</delete>
+	<!-- 增加tb_file表的数据 -->
+	<insert id="save" parameterType="com.EMS.model.vo.FileVo">
+		insert into
+		tb_file(business_number,business_types,property_owner,file_location,security,address,filing_date)
+		values(#{business_number},#{business_types},#{property_owner},
+		 #{file_location},#{security},#{address},#{filing_date})
+	</insert>
+	
+	<!-- 通过产权人模糊查询获得档案 -->
+	<select id="selectForLike" resultType="com.EMS.model.vo.FileVo" parameterType="String">
+		select * from tb_file 
+		where property_owner like #{_parameter} and file_location is  not null
+	</select>
+	
+	<!-- 通过业务宗号模糊查询获得档案 -->
+	<select id="selectFornumber" resultType="com.EMS.model.vo.FileVo" parameterType="String">
+		select * from
+		tb_file where business_number like #{_parameter} and file_location is  not null
+	</select>
+	
+	<!-- 通过业务类型模糊查询获得档案 -->
+	<select id="selectFortype" resultType="com.EMS.model.vo.FileVo" parameterType="String">
+		select * from tb_file where Business_types like #{_parameter} and file_location is  not null
+	</select>
+	<!-- 通过业务号查询档案 -->
+		<select id="selectbynumber" resultType="com.EMS.model.vo.FileVo" parameterType="String">
+		select * from
+		tb_file where business_number=#{business_number}
+	</select>
+</mapper>

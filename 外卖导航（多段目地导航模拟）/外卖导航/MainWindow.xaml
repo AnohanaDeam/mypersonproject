@@ -1,0 +1,40 @@
+﻿<Window x:Class="外卖导航.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:外卖导航"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="0.7*" />
+                <RowDefinition Height="0.65*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="head" Height="auto" TextWrapping="Wrap" Text="外卖导航程序" Width="auto" FontSize="10"/>
+            <GroupBox Header="路径点" Grid.Row="1" FontSize="18" Margin="5,5,5,5">
+                <WrapPanel x:Name="path_panel" >
+                    <TextBlock TextWrapping="Wrap" Text="起点:" Style="{StaticResource MyTextBlock}"/>
+                    <TextBox x:Name="start_path" Text="点击地图输入路径点" Style="{StaticResource MyTextBox}"/>
+                </WrapPanel>
+            </GroupBox>
+            <GroupBox Header="操作" Grid.Row="2" FontSize="18" Margin="5,5,5,5">
+                <WrapPanel>
+                    <Button Content="导航" FontSize="35"  Style="{StaticResource lucency}" Margin="50,5,5,5" Click="Button_Guide"/>
+                    <Button Content="删除最后一个路径" FontSize="35"  Style="{StaticResource lucency}" Margin="20,5,5,5" Click="Button_del"/>
+                    <Button x:Name="Button_rem" Content="重置地图" FontSize="35"  Style="{StaticResource lucency}" Margin="20,5,5,5" Click="Button_rem_Click"/>
+                    <Button Content="播放" FontSize="35"  Style="{StaticResource lucency}" Margin="20,5,5,5" Click="Button_Click_Play" />
+                    <Button Content="上一帧" FontSize="35"  Style="{StaticResource lucency}" Margin="20,5,5,5" Click="Button_Click_prev" />
+                    <Button Content="下一帧" FontSize="35"  Style="{StaticResource lucency}" Margin="20,5,5,5" Click="Button_Click_next"/>
+                </WrapPanel>
+            </GroupBox>
+            <GroupBox Header="地图" Grid.Row="3" FontSize="18" Margin="5,5,5,5">
+                <Grid x:Name="map_grid" Margin="5,5,5,5">
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.EMS.model.dao.RoomrecordMapper">
+	<select id="selectRoomrecordAll" resultType="com.EMS.model.vo.RoomrecordVo">
+		select * from tb_roomrecord
+	</select>
+	<select id="selectRoomrecordAllByNumber" parameterType="java.lang.String" resultType="com.EMS.model.vo.RoomrecordVo">
+		select * from tb_roomrecord  where business_number=#{business_number}
+	</select>
+	<update id="updateByNumber" parameterType="com.EMS.model.vo.RoomrecordVo">
+		update tb_roomrecord set movie_theater=#{movie_theater},room_number=#{room_number},
+			area=#{area},buyer=#{buyer},business_number=#{business_number},
+			signing_time=#{signing_time},total_price=#{total_price},payment_method=#{payment_method},
+			booking_record=#{booking_record},mortgage_reg=#{mortgage_reg},mortgage_bank=#{mortgage_bank},item_no=#{item_no}
+		where number=#{number}
+	</update>
+	
+	<delete id="deleteByNumber" parameterType="java.lang.String">
+		delete from tb_roomrecord where number=#{number}
+	</delete>
+	
+	<delete id="deleteByBusiness_number" parameterType="java.lang.String">
+		delete from tb_roomrecord where business_number=#{business_number}
+	</delete>
+	
+	<!-- 添加数据 -->
+	<insert id="saveRoomrecord" parameterType="com.EMS.model.vo.RoomrecordVo"
+		useGeneratedKeys="true">
+		insert into
+		tb_roomrecord(movie_theater,room_number,area,buyer,business_number,signing_time,total_price,payment_method,booking_record,mortgage_reg,mortgage_bank,item_no)
+		values(#{movie_theater},#{room_number},#{area},#{buyer},#{business_number},#{signing_time},#{total_price},#{payment_method},#{booking_record},#{mortgage_reg},#{mortgage_bank},#{item_no})
+	</insert>
+	
+	<!-- 通过买受人模糊查询获得备案 -->
+	<select id="selectForbuyer" resultType="java.util.ArrayList" parameterType="java.lang.String">
+		select * from
+		tb_roomrecord where buyer like %buyer%
+	</select>
+	
+	<!-- 通过业务号模糊查询获得备案-->
+	<select id="selectForbusiness_number" resultType="java.util.ArrayList" parameterType="java.lang.String">
+		select * from
+		tb_roomrecord where business_number like %business_number%
+	</select>
+	
+	<!-- 通过面积模糊查询获得备案 -->
+	<select id="selectForarea" resultType="java.util.ArrayList" parameterType="java.lang.String">
+		select * from
+		tb_roomrecord where area like %area%
+	</select>
+</mapper>

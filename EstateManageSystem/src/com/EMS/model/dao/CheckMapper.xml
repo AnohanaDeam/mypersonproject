@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.CheckMapper">
+	<!-- 查询CheckVo数据 -->
+	<select id="selectCheckAll" resultType="com.EMS.model.vo.CheckVo">
+		select * from tb_check
+	</select>
+	<select id="selectCheckAllByNumber" parameterType="java.lang.String"
+		resultType="com.EMS.model.vo.CheckVo">
+		select * from tb_check where business_number=#{business_number}
+	</select>
+	<select id="selectCheckByNumber" parameterType="java.lang.String"
+		resultType="com.EMS.model.vo.CheckVo">
+		select * from tb_check where business_number=#{business_number}
+	</select>
+	<!-- 通过主键修改CheckVo数据 -->
+	<!-- 一审 -->
+	<update id="updateByBusiness_number1" parameterType="com.EMS.model.vo.CheckVo">
+		update
+		tb_check set
+		first_trial_case=#{first_trial_case},one_opinion=#{one_opinion},
+		one_time=#{one_time}
+		,one_material=#{one_material},one_realcheck=#{one_realcheck}
+		where
+		business_number=#{business_number}
+	</update>
+	<!-- 二审 -->
+	<update id="updateByBusiness_number2" parameterType="com.EMS.model.vo.CheckVo">
+		update
+		tb_check set second_case=#{second_case},two_opinion=#{two_opinion},
+		two_time=#{two_time}
+		,two_material=#{two_material},two__realcheck=#{two__realcheck}
+		where
+		business_number=#{business_number}
+	</update>
+	<!-- 三审 -->
+	<update id="updateByBusiness_number3" parameterType="com.EMS.model.vo.CheckVo">
+		update
+		tb_check set three_case=#{three_case},three_opinion=#{three_opinion},
+		three_time=#{three_time}
+		,three_material=#{three_material},three_realcheck=#{three_realcheck}
+		where
+		business_number=#{business_number}
+	</update>
+
+	<!-- 通过主键删除CheckVo数据 -->
+	<delete id="deleteByBusiness_number" parameterType="java.lang.String">
+		delete from
+		tb_check where business_number=#{business_number}
+	</delete>
+
+	<!-- 添加审核信息 -->
+	<!-- 受理通过，添加业务受理号，审核情况 -->
+	<insert id="save" parameterType="com.EMS.model.vo.CheckVo">
+		insert into
+		tb_check(business_number,first_trial_case,second_case,three_case)
+		values(#{business_number},#{first_trial_case},#{second_case},#{three_case})
+	</insert>
+	<!-- 添加一审 -->
+	<insert id="addCheck" parameterType="com.EMS.model.vo.CheckVo">
+		insert into
+		tb_check(business_number,first_trial_case,one_opinion,one_time,one_material,one_realcheck)
+		values(#{business_number},#{first_trial_case},#{one_opinion},#{one_time},#{one_material},#{one_realcheck})
+
+	</insert>
+	<select id="selectbyfirst" parameterType="java.lang.String"
+		resultType="com.EMS.model.vo.CheckVo">
+		SELECT * FROM tb_check where first_trial_case=#{first_trial_case} and
+		second_case is null
+	</select>
+	<select id="selectbySencond" parameterType="java.lang.String"
+		resultType="com.EMS.model.vo.CheckVo">
+		SELECT * FROM tb_check where second_case=#{second_case} and three_case is
+		null
+	</select>
+	<select id="selectbyfirst2" 
+		resultType="com.EMS.model.vo.CheckVo">
+		SELECT * FROM tb_check where first_trial_case is not null
+	</select>
+</mapper>

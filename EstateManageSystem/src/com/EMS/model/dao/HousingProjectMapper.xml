@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.HousingProjectMapper">
+	<!-- 查询tb_HousingProjectVo表的数据 -->
+	
+	<select id="selectAll" resultType="com.EMS.model.vo.HousingProjectVo">
+		select * from
+		tb_Housing_Project
+	</select>
+	
+	<select id="selectByItem_no" parameterType="String" resultType="com.EMS.model.vo.HousingProjectVo">
+		select * from tb_Housing_Project where Item_no=#{item_no}
+	</select>	
+	<!-- 通过主键修改tb_HousingProjectVo表的数据 -->
+	<update id="updateByItem_no" parameterType="com.EMS.model.vo.HousingProjectVo">
+		update
+		tb_Housing_Project set enterprise=#{enterprise},
+		project_name=#{project_name} ,booking_number=#{booking_number}
+		where
+		item_no=#{item_no}
+	</update>
+	<!-- 通过主键删除tb_HousingProjectVo表的数据 -->
+	<delete id="deleteByItem_no" parameterType="String">
+		delete from
+		tb_Housing_Project where item_no=#{item_no}
+	</delete>
+	<!-- 增加tb_HousingProjectVo表的数据 -->
+	<insert id="sava" parameterType="com.EMS.model.vo.HousingProjectVo">
+		insert into
+		tb_Housing_Project(item_no,enterprise,project_name,booking_number)
+		values(#{item_no},#{enterprise},#{project_name},#{booking_number})
+	</insert>
+</mapper>

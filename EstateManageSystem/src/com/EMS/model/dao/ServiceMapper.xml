@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.EMS.model.dao.ServiceMapper">
+	<select id="selectServiceAll" resultType="com.EMS.model.vo.ServiceVo">
+		select * from tb_service
+	</select>
+	<update id="updateByService_number" parameterType="com.EMS.model.vo.ServiceVo">
+		update tb_service set service_name=#{service_name},f_service=#{f_service}
+		where service_number=#{service_number}
+	</update>
+	
+	<delete id="deleteByService_number" parameterType="String">
+		delete from tb_service where service_number=#{service_number}
+	</delete>
+	
+	<!-- 添加数据 -->
+	<insert id="saveService" parameterType="com.EMS.model.vo.ServiceVo"
+		useGeneratedKeys="true">
+		insert into
+		tb_service(service_number,service_name,f_service)
+		values(#{service_number},#{service_name},#{f_service})
+	</insert>
+	
+	<select id="selectServiceName" parameterType="com.EMS.model.vo.ServiceVo" resultType="com.EMS.model.vo.ServiceVo">
+		select * from tb_service where f_service = #{f_service} and service_number = #{service_number}
+	</select>	
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EMS.model.dao.MaterialMapper">
+	<!-- 查询tb_Material表的数据 -->
+	<select id="selectAll" resultType="com.EMS.model.vo.MaterialVo">
+		select * from
+		tb_material
+	</select>
+	
+	<select id="selectByBusiness_number" parameterType="String" resultType="com.EMS.model.vo.MaterialVo">
+		select * from tb_material where business_number=#{business_number}
+	</select>
+	
+	<!-- 通过主键修改tb_Material表的数据 -->
+	<update id="updateBybusiness_number" parameterType="com.EMS.model.vo.MaterialVo">
+		update
+		tb_material set material_number=#{material_number},
+		material_type_number=#{material_type_number} ,file_name=#{file_name},
+		file_size=#{file_size},material_address=#{material_address},form=#{form}
+		where
+		business_number=#{business_number}
+	</update>
+	<!-- 通过主键删除tb_Material表的数据 -->
+	<delete id="deleteBybusiness_number" parameterType="String">
+		delete from
+		tb_material where business_number=#{business_number}
+	</delete>
+	<!-- 增加tb_Material表的数据 -->
+	<insert id="save" parameterType="com.EMS.model.vo.MaterialVo">
+		insert into
+		tb_material(material_number,material_type_number,file_name,
+		file_size,material_address,form,business_number)
+		values(#{material_number},#{material_type_number},#{file_name},
+		#{file_size},#{material_address},#{form},#{business_number})
+	</insert>
+</mapper>
